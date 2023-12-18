@@ -20,6 +20,11 @@ router.get('/profile', isLoggedIn, async function(req, res, next) {
   res.render('profile', {user, nav:true});
 });
 
+router.get('/add', isLoggedIn, async function(req, res, next) {
+  const user = await userModel.findOne({username: req.session.passport.user});
+  res.render('add', {user, nav:true});
+});
+
 router.post('/fileupload', isLoggedIn, upload.single("image"), async function(req, res, next) {
  const user = await userModel.findOne({username: req.session.passport.user});
  user.profileImage = req.file.filename;
