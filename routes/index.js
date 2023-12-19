@@ -33,7 +33,11 @@ router.get('/createpost', isLoggedIn, upload.single("postimage"), async function
     title: req.body.title,
     description: req.body.description,
     image: req.file.filename
-  })
+  });
+
+  user.posts.push(post._id);
+  await user.save();
+  res.redirect("/profile");
 });
 
 router.post('/fileupload', isLoggedIn, upload.single("image"), async function(req, res, next) {
