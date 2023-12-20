@@ -26,10 +26,10 @@ router.get('/add', isLoggedIn, async function(req, res, next) {
   res.render('add', {user, nav:true});
 });
 
-router.get('/createpost', isLoggedIn, upload.single("postimage"), async function(req, res, next) {
+router.post('/createpost', isLoggedIn, upload.single("postimage"), async function(req, res, next) {
   const user = await userModel.findOne({username: req.session.passport.user});
   const post = await postModel.create({
-    user:user._id,
+    user: user._id,
     title: req.body.title,
     description: req.body.description,
     image: req.file.filename
